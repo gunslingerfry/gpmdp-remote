@@ -28,7 +28,7 @@ artist () {
 }
 
 album () {
-    album=$(awk -F '"|:' '/album/ {printf $5}' "$json_file")
+    album=$(awk -F '"|:' '!/albumArt/ && /album/ {printf $5}' "$json_file")
     printf "${album}"
 }
 
