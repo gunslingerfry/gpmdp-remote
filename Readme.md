@@ -1,6 +1,7 @@
 # gpmdp
 
 Get info about the current playing song in Google Play Music Desktop Player
+
 I made this for use in [`neofetch`](https://github.com/dylanaraps/neofetch)
 
 ## Installation
