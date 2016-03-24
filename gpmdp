@@ -1,0 +1,144 @@
+#!/usr/bin/env bash
+#
+# gpmdp - get info from Google Play Music Desktop Player easily
+# https://github.com/iandrewt/gpmdp-bash
+#
+# Created by Andrew Titmuss
+# https://github.com/iandrewt/
+
+# Speed up script by not using Unicode
+export LC_ALL=C
+export LANG=C
+
+# Determine config file location from uname
+
+case "$(uname)" in
+    "Linux")    json_file="$HOME/.config/Google Play Music Desktop Player/json_store/playback.json" ;;
+    "Darwin")   json_file="$HOME/Library/Application Support/Google Play Music Desktop Player/json_store/playback.json" ;;
+    "CYGWIN"*)  json_file="%APPDATA%/Google Play Music Desktop Player/json_store/playback.json" ;;
+esac
+
+title () {
+    title=$(grep title "$json_file" | cut -d ':' -f 2)
+    title=${title#*\"}
+    title=${title%\"*}
+    printf "${title}"
+    return
+}
+
+artist () {
+    artist=$(grep artist "$json_file" | cut -d ':' -f 2)
+    artist=${artist#*\"}
+    artist=${artist%\"*}
+    printf "${artist}"
+    return
+}
+
+album () {
+    album=$(grep \"album\": "$json_file" | cut -d ':' -f 2-)
+    album=${album#*\"}
+    album=${album%\"*}
+    printf "${album}"
+    return
+}
+
+album_art () {
+    album_art=$(grep albumArt "$json_file" | cut -d ':' -f 2-3)
+    album_art=${album_art#*\"}
+    album_art=${album_art%\"*}
+    printf "${album_art}"
+    return
+}
+
+rating () {
+    liked="$(grep liked "$json_file"| cut -d ':' -f 2-)"
+    liked=${liked#*\"}
+    liked=${liked%\"*}
+
+    disliked="$(grep disliked "$json_file" | cut -d ':' -f 2-)"
+    disliked=${disliked#*\"}
+    disliked=${disliked%\"*}
+
+    if [ "$liked" == "true" ]; then
+        rating="liked"
+    elif [ "$disliked" == "true" ]; then
+        rating="diskliked"
+    else
+        rating="unrated"
+    fi
+
+    printf "${rating}"
+    return
+}
+
+time_current () {
+    time_current="$(grep current "$json_file" | cut -d ':' -f 2-)"
+    time_current=${time_current#*\"}
+    time_current=${time_current%\"*}
+    printf "${time_current}"
+    return
+}
+
+time_total () {
+    time_total="$(grep total "$json_file" | cut -d ':' -f 2-)"
+    time_total=${time_total#*\"}
+    time_total=${time_total%\"*}
+    printf "${time_total}"
+    return
+}
+
+gpmdp_status () {
+    gpmdp_status="$(grep playing "$json_file" | cut -d ':' -f 2-)"
+
+    if [[ "$gpmdp_status" == *"true"* ]]; then
+        gpmdp_status="Playing"
+    elif [[ "$gpmdp_status" == *"false"* ]]; then
+        gpmdp_status="Paused"
+    fi
+
+    printf "${gpmdp_status}"
+    return
+}
+
+gpmdp_info () {
+    if [ "$(gpmdp_status)" == "Playing" ]; then
+        printf "Now Playing: $(title) by $(artist)"
+    elif [ "$(gpmdp_status)" == "Paused" ]; then
+        printf "Paused: $(title) by $(artist)"
+    fi
+    return
+}
+
+usage () { cat << EOF
+
+    usage: gpmdp <option>
+
+    info            Print info about now playing song
+    title           Print current song title
+    artist          Print current song artist
+    album           Print current song album
+    album_art       Print current song album art URL
+    rating          Print current song
+    time_current    Print current song time in milliseconds
+    time_total      Print total song time in milliseconds
+    status          Print whether GPMDP is paused or playing
+    help            Print this help message
+    
+EOF
+exit 1
+}
+
+
+case $1 in
+    info) gpmdp_info ;;
+    title) title ;;
+    artist) artist ;;
+    album) album ;;
+    album_art) album_art ;;
+    rating) rating ;;
+    time_current) time_current ;;
+    time_total) time_total ;;
+    status) gpmdp_status ;;
+    *) usage ;;
+esac
+
