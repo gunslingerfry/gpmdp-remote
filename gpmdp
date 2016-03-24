@@ -11,53 +11,35 @@ export LC_ALL=C
 export LANG=C
 
 # Determine config file location from uname
-
 case "$(uname)" in
-    "Linux" | *"BSD")    json_file="$HOME/.config/Google Play Music Desktop Player/json_store/playback.json" ;;
-    "Darwin")   json_file="$HOME/Library/Application Support/Google Play Music Desktop Player/json_store/playback.json" ;;
-    "CYGWIN"*)  json_file="%APPDATA%/Google Play Music Desktop Player/json_store/playback.json" ;;
+    "Linux" | *"BSD") json_file="$HOME/.config/Google Play Music Desktop Player/json_store/playback.json" ;;
+    "Darwin") json_file="$HOME/Library/Application Support/Google Play Music Desktop Player/json_store/playback.json" ;;
+    "CYGWIN"*) json_file="%APPDATA%/Google Play Music Desktop Player/json_store/playback.json" ;;
 esac
 
 title () {
-    title=$(grep title "$json_file" | cut -d ':' -f 2)
-    title=${title#*\"}
-    title=${title%\"*}
+    title=$(awk -F '"|:' '/title/ {printf $5}' "$json_file")
     printf "${title}"
-    return
 }
 
 artist () {
-    artist=$(grep artist "$json_file" | cut -d ':' -f 2)
-    artist=${artist#*\"}
-    artist=${artist%\"*}
+    artist=$(awk -F '"|:' '/artist/ {printf $5}' "$json_file")
     printf "${artist}"
-    return
 }
 
 album () {
-    album=$(grep \"album\": "$json_file" | cut -d ':' -f 2-)
-    album=${album#*\"}
-    album=${album%\"*}
+    album=$(awk -F '"|:' '/album/ {printf $5}' "$json_file")
     printf "${album}"
-    return
 }
 
 album_art () {
-    album_art=$(grep albumArt "$json_file" | cut -d ':' -f 2-3)
-    album_art=${album_art#*\"}
-    album_art=${album_art%\"*}
+    album_art=$(awk -F '"|:' '/albumArt/ {printf $5":"$6}' "$json_file")
     printf "${album_art}"
-    return
 }
 
 rating () {
-    liked="$(grep liked "$json_file"| cut -d ':' -f 2-)"
-    liked=${liked#*\"}
-    liked=${liked%\"*}
-
-    disliked="$(grep disliked "$json_file" | cut -d ':' -f 2-)"
-    disliked=${disliked#*\"}
-    disliked=${disliked%\"*}
+    liked=$(awk -F '"|:' '/liked/ {printf $5}' "$json_file")
+    disliked=$(awk -F '"|:' '/disliked/ {printf $5}' "$json_file")
 
     if [ "$liked" == "true" ]; then
         rating="liked"
@@ -68,27 +50,20 @@ rating () {
     fi
 
     printf "${rating}"
-    return
 }
 
 time_current () {
-    time_current="$(grep current "$json_file" | cut -d ':' -f 2-)"
-    time_current=${time_current#*\"}
-    time_current=${time_current%\"*}
+    time_current=$(awk -F ': |,' '/current/ {printf $2}' "$json_file")
     printf "${time_current}"
-    return
 }
 
 time_total () {
-    time_total="$(grep total "$json_file" | cut -d ':' -f 2-)"
-    time_total=${time_total#*\"}
-    time_total=${time_total%\"*}
+    time_total=$(awk -F ': |,' '/total/ {printf $2}' "$json_file")
     printf "${time_total}"
-    return
 }
 
 gpmdp_status () {
-    gpmdp_status="$(grep playing "$json_file" | cut -d ':' -f 2-)"
+    gpmdp_status=$(awk -F ': |,' '/playing/ {printf $2}' "$json_file")
 
     if [[ "$gpmdp_status" == *"true"* ]]; then
         gpmdp_status="Playing"
@@ -97,7 +72,6 @@ gpmdp_status () {
     fi
 
     printf "${gpmdp_status}"
-    return
 }
 
 gpmdp_info () {
@@ -123,7 +97,7 @@ usage () { cat << EOF
     time_total      Print total song time in milliseconds
     status          Print whether GPMDP is paused or playing
     help            Print this help message
-    
+
 EOF
 exit 1
 }
