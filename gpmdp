@@ -13,7 +13,7 @@ export LANG=C
 # Determine config file location from uname
 
 case "$(uname)" in
-    "Linux")    json_file="$HOME/.config/Google Play Music Desktop Player/json_store/playback.json" ;;
+    "Linux" | *"BSD")    json_file="$HOME/.config/Google Play Music Desktop Player/json_store/playback.json" ;;
     "Darwin")   json_file="$HOME/Library/Application Support/Google Play Music Desktop Player/json_store/playback.json" ;;
     "CYGWIN"*)  json_file="%APPDATA%/Google Play Music Desktop Player/json_store/playback.json" ;;
 esac
