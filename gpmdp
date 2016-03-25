@@ -83,6 +83,10 @@ gpmdp_info () {
     return
 }
 
+current () {
+    printf "$(artist) - $(title)"
+}
+
 usage () { cat << EOF
 
     usage: gpmdp <option>
@@ -96,6 +100,7 @@ usage () { cat << EOF
     time_current    Print current song time in milliseconds
     time_total      Print total song time in milliseconds
     status          Print whether GPMDP is paused or playing
+    current         Print now playing song in "artist - song" format
     help            Print this help message
 
 EOF
@@ -113,6 +118,7 @@ case $1 in
     time_current) time_current ;;
     time_total) time_total ;;
     status) gpmdp_status ;;
+    current) current ;;
     *) usage ;;
 esac
 
