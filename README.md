@@ -31,5 +31,6 @@ Uninstall with your package manager, otherwise run `make uninstall`
     time_current    Print current song time in milliseconds
     time_total      Print total song time in milliseconds
     status          Print whether GPMDP is paused or playing
+    current         Print now playing song in "artist - song" format
     help            Print this help message
  
