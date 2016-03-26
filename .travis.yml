@@ -16,4 +16,3 @@ script:
     - gpmdp time_total
     - gpmdp status
     - gpmdp current
-    - gpmdp
