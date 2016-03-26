@@ -2,8 +2,8 @@ language:
     bash
 
 before_install:
-    mkdir -p $HOME/.config/Google\ Play\ Music\ Desktop\ Player/json_store
-curl -o $HOME/.config/Google\ Play\ Music\ Desktop\ Player/json_store/playback.json https://gist.githubusercontent.com/iandrewt/21fa4e4c59bd8cbbeca6/raw/ee3eacf95266b4ad3bb345b8246604c4bca5be1a/playback.json 
+    - mkdir -p $HOME/.config/Google\ Play\ Music\ Desktop\ Player/json_store
+    - curl -o $HOME/.config/Google\ Play\ Music\ Desktop\ Player/json_store/playback.json https://gist.githubusercontent.com/iandrewt/21fa4e4c59bd8cbbeca6/raw/ee3eacf95266b4ad3bb345b8246604c4bca5be1a/playback.json 
 
 script:
     - sudo make install
