@@ -1,4 +1,4 @@
-# gpmdp
+# gpmdp [![Build Status](https://travis-ci.org/iandrewt/gpmdp-bash.svg?branch=master)](https://travis-ci.org/iandrewt/gpmdp-bash)
 
 Get info about the current playing song in Google Play Music Desktop Player
 
