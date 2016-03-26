@@ -37,21 +37,6 @@ album_art () {
     printf "${album_art}"
 }
 
-rating () {
-    liked=$(awk -F '"|:' '/liked/ {printf $5}' "$json_file")
-    disliked=$(awk -F '"|:' '/disliked/ {printf $5}' "$json_file")
-
-    if [ "$liked" == "true" ]; then
-        rating="liked"
-    elif [ "$disliked" == "true" ]; then
-        rating="diskliked"
-    else
-        rating="unrated"
-    fi
-
-    printf "${rating}"
-}
-
 time_current () {
     time_current=$(awk -F ': |,' '/current/ {printf $2}' "$json_file")
     printf "${time_current}"
@@ -96,7 +81,6 @@ usage () { cat << EOF
     artist          Print current song artist
     album           Print current song album
     album_art       Print current song album art URL
-    rating          Print current song
     time_current    Print current song time in milliseconds
     time_total      Print total song time in milliseconds
     status          Print whether GPMDP is paused or playing
@@ -114,7 +98,6 @@ case $1 in
     artist) artist ;;
     album) album ;;
     album_art) album_art ;;
-    rating) rating ;;
     time_current) time_current ;;
     time_total) time_total ;;
     status) gpmdp_status ;;
