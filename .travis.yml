@@ -1,18 +1,19 @@
 language:
     bash
 
+matrix:
+    include:
+        - os: linux
+        - os: osx
+          osx_image: xcode7.2
+          env: PREFIX=/usr/local
+
 before_install:
-    - mkdir -p $HOME/.config/Google\ Play\ Music\ Desktop\ Player/json_store
-    - curl -o $HOME/.config/Google\ Play\ Music\ Desktop\ Player/json_store/playback.json https://gist.githubusercontent.com/iandrewt/21fa4e4c59bd8cbbeca6/raw/ee3eacf95266b4ad3bb345b8246604c4bca5be1a/playback.json 
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mkdir -p $HOME/.config/Google\ Play\ Music\ Desktop\ Player/json_store                    ; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then mkdir -p $HOME/Library/Application\ Support/Google\ Play\ Music\ Desktop\ Player/json_store ; fi
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then curl -o $HOME/.config/Google\ Play\ Music\ Desktop\ Player/json_store/playback.json https://gist.githubusercontent.com/iandrewt/21fa4e4c59bd8cbbeca6/raw/ee3eacf95266b4ad3bb345b8246604c4bca5be1a/playback.json; fi 
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then curl -o $HOME/Library/Application\ Support/Google\ Play\ Music\ Desktop\ Player/json_store/playback.json https://gist.githubusercontent.com/iandrewt/21fa4e4c59bd8cbbeca6/raw/ee3eacf95266b4ad3bb345b8246604c4bca5be1a/playback.json; fi 
 
 script:
     - sudo make install
-    - gpmdp info
-    - gpmdp title
-    - gpmdp artist
-    - gpmdp album
-    - gpmdp album_art
-    - gpmdp time_current
-    - gpmdp time_total
-    - gpmdp status
-    - gpmdp current
+    - make test
