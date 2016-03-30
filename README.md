@@ -1,4 +1,4 @@
-# gpmdp
+# gpmdp [![Build Status](https://travis-ci.org/iandrewt/gpmdp-bash.svg?branch=master)](https://travis-ci.org/iandrewt/gpmdp-bash)
 
 Get info about the current playing song in Google Play Music Desktop Player
 
@@ -27,9 +27,9 @@ Uninstall with your package manager, otherwise run `make uninstall`
     artist          Print current song artist
     album           Print current song album
     album_art       Print current song album art URL
-    rating          Print current song
     time_current    Print current song time in milliseconds
     time_total      Print total song time in milliseconds
     status          Print whether GPMDP is paused or playing
+    current         Print now playing song in "artist - song" format
     help            Print this help message
  
