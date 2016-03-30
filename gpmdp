@@ -18,73 +18,49 @@ case "$(uname)" in
 esac
 
 title () {
-    title=$(awk -F '"|:' '/title/ {printf $5}' "$json_file")
-    printf "${title}"
+    printf "%s\n" "$(awk -F '"|:' '/title/ {printf $5}' "$json_file")"
 }
 
 artist () {
-    artist=$(awk -F '"|:' '/artist/ {printf $5}' "$json_file")
-    printf "${artist}"
+    printf "%s\n" "$(awk -F '"|:' '/artist/ {printf $5}' "$json_file")"
 }
 
 album () {
-    album=$(awk -F '"|:' '!/albumArt/ && /album/ {printf $5}' "$json_file")
-    printf "${album}"
+    printf "%s\n" "$(awk -F '"|:' '!/albumArt/ && /album/ {printf $5}' "$json_file")"
 }
 
 album_art () {
-    album_art=$(awk -F '"|:' '/albumArt/ {printf $5":"$6}' "$json_file")
-    printf "${album_art}"
-}
-
-rating () {
-    liked=$(awk -F '"|:' '/liked/ {printf $5}' "$json_file")
-    disliked=$(awk -F '"|:' '/disliked/ {printf $5}' "$json_file")
-
-    if [ "$liked" == "true" ]; then
-        rating="liked"
-    elif [ "$disliked" == "true" ]; then
-        rating="diskliked"
-    else
-        rating="unrated"
-    fi
-
-    printf "${rating}"
+    printf "%s\n" "$(awk -F '"|:' '/albumArt/ {printf $5":"$6}' "$json_file")"
 }
 
 time_current () {
-    time_current=$(awk -F ': |,' '/current/ {printf $2}' "$json_file")
-    printf "${time_current}"
+    printf "%s\n" "$(awk -F ': |,' '/current/ {printf $2}' "$json_file")"
 }
 
 time_total () {
-    time_total=$(awk -F ': |,' '/total/ {printf $2}' "$json_file")
-    printf "${time_total}"
+    printf "%s\n" "$(awk -F ': |,' '/total/ {printf $2}' "$json_file")"
 }
 
 gpmdp_status () {
     gpmdp_status=$(awk -F ': |,' '/playing/ {printf $2}' "$json_file")
 
     if [[ "$gpmdp_status" == *"true"* ]]; then
-        gpmdp_status="Playing"
+        printf "%s\n" "Playing"
     elif [[ "$gpmdp_status" == *"false"* ]]; then
-        gpmdp_status="Paused"
+        printf "%s\n" "Paused"
     fi
-
-    printf "${gpmdp_status}"
 }
 
 gpmdp_info () {
     if [ "$(gpmdp_status)" == "Playing" ]; then
-        printf "Now Playing: $(title) by $(artist)"
+        printf "%s\n" "Now Playing: $(title) by $(artist)"
     elif [ "$(gpmdp_status)" == "Paused" ]; then
-        printf "Paused: $(title) by $(artist)"
+        printf "%s\n" "Paused: $(title) by $(artist)"
     fi
-    return
 }
 
 current () {
-    printf "$(artist) - $(title)"
+    printf "%s\n" "$(artist) - $(title)"
 }
 
 usage () { cat << EOF
@@ -96,7 +72,6 @@ usage () { cat << EOF
     artist          Print current song artist
     album           Print current song album
     album_art       Print current song album art URL
-    rating          Print current song
     time_current    Print current song time in milliseconds
     time_total      Print total song time in milliseconds
     status          Print whether GPMDP is paused or playing
@@ -114,7 +89,6 @@ case $1 in
     artist) artist ;;
     album) album ;;
     album_art) album_art ;;
-    rating) rating ;;
     time_current) time_current ;;
     time_total) time_total ;;
     status) gpmdp_status ;;
