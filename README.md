@@ -10,6 +10,10 @@ I made this for use in [`neofetch`](https://github.com/dylanaraps/neofetch)
 
 - Run `brew install iandrewt/tap/gpmdp-bash`
 
+### Arch Linux
+
+- Install [gpmdp-bash](https://aur.archlinux.org/packages/gpmdp-bash) from the AUR
+
 ### Others
 
 Clone the repo and run `make install`
