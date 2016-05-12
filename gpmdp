@@ -14,7 +14,7 @@ export LANG=C
 case "$(uname)" in
     "Linux" | *"BSD") json_file="$HOME/.config/Google Play Music Desktop Player/json_store/playback.json" ;;
     "Darwin") json_file="$HOME/Library/Application Support/Google Play Music Desktop Player/json_store/playback.json" ;;
-    "CYGWIN"*) json_file="%APPDATA%/Google Play Music Desktop Player/json_store/playback.json" ;;
+    "CYGWIN"*) json_file="$APPDATA/Google Play Music Desktop Player/json_store/playback.json" ;;
 esac
 
 title () {
