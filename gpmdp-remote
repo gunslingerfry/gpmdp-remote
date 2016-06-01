@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
-# gpmdp - get info from Google Play Music Desktop Player easily
-# https://github.com/iandrewt/gpmdp-bash
+# gpmdp-remote - get info from Google Play Music Desktop Player easily
+# https://github.com/iandrewt/gpmdp-remote
 #
 # Created by Andrew Titmuss
 # https://github.com/iandrewt/
@@ -65,7 +65,7 @@ current () {
 
 usage () { cat << EOF
 
-    usage: gpmdp <option>
+    usage: gpmdp-remote <option>
 
     info            Print info about now playing song
     title           Print current song title

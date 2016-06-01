@@ -1,4 +1,4 @@
-# gpmdp [![Build Status](https://travis-ci.org/iandrewt/gpmdp-bash.svg?branch=master)](https://travis-ci.org/iandrewt/gpmdp-bash)
+# gpmdp-remote [![Build Status](https://travis-ci.org/iandrewt/gpmdp-remote.svg?branch=master)](https://travis-ci.org/iandrewt/gpmdp-remote)
 
 Get info about the current playing song in Google Play Music Desktop Player
 
@@ -8,11 +8,11 @@ I made this for use in [`neofetch`](https://github.com/dylanaraps/neofetch)
 
 ### OS X
 
-- Run `brew install iandrewt/tap/gpmdp-bash`
+- Run `brew install iandrewt/tap/gpmdp-remote`
 
 ### Arch Linux
 
-- Install [gpmdp-bash](https://aur.archlinux.org/packages/gpmdp-bash) from the AUR
+- Install [gpmdp-remote](https://aur.archlinux.org/packages/gpmdp-remote) from the AUR
 
 ### Others
 
@@ -24,7 +24,7 @@ Uninstall with your package manager, otherwise run `make uninstall`
 
 ## Usage
 
-    usage: gpmdp <option>
+    usage: gpmdp-remote <option>
 
     info            Print info about now playing song
     title           Print current song title
