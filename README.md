@@ -1,5 +1,7 @@
 # gpmdp-remote [![Build Status](https://travis-ci.org/iandrewt/gpmdp-remote.svg?branch=master)](https://travis-ci.org/iandrewt/gpmdp-remote)
 
+CONSIDER THIS UNMAINTAINED, I DO NOT USE GOOGLE PLAY MUSIC ANYMORE SO THIS COULD BREAK AT ANY TIME
+
 Get info about the current playing song in Google Play Music Desktop Player
 
 I made this for use in [`neofetch`](https://github.com/dylanaraps/neofetch)
@@ -8,7 +10,7 @@ I made this for use in [`neofetch`](https://github.com/dylanaraps/neofetch)
 
 ### OS X
 
-- Run `brew install iandrewt/tap/gpmdp-remote`
+- Run `brew install iandrewt/repo/gpmdp-remote`
 
 ### Arch Linux
 
