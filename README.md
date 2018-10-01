@@ -1,6 +1,11 @@
-# gpmdp-remote [![Build Status](https://travis-ci.org/iandrewt/gpmdp-remote.svg?branch=master)](https://travis-ci.org/iandrewt/gpmdp-remote)
+# gpmdp-remote [![Build Status](https://travis-ci.com/gunslingerfry/gpmdp-remote.svg?branch=master)](https://travis-ci.com/gunslingerfry/gpmdp-remote)
 
-CONSIDER THIS UNMAINTAINED, I DO NOT USE GOOGLE PLAY MUSIC ANYMORE SO THIS COULD BREAK AT ANY TIME
+~~CONSIDER THIS UNMAINTAINED, I DO NOT USE GOOGLE PLAY MUSIC ANYMORE SO THIS COULD BREAK AT ANY TIME~~
+
+Don't expect much, this repo will receive my personal changes. I currently use this set up and it's pretty much the only set up I'd be willing to support but I welcome PR's:
+[gpmdp](https://github.com/MarshallOfSound/Google-Play-Music-Desktop-Player-UNOFFICIAL-/blob/master/docs/PlaybackAPI.md) => gpmdp-remote => [i3bar](https://i3wm.org/i3bar/) => [py3status](https://py3status.readthedocs.io/en/latest/modules.html#gpmdp)
+
+# Andrew's Original README
 
 Get info about the current playing song in Google Play Music Desktop Player
 
