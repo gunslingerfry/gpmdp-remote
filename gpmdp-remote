@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 #
 # gpmdp-remote - get info from Google Play Music Desktop Player easily
-# https://github.com/iandrewt/gpmdp-remote
+# https://github.com/gunslingerfry/gpmdp-remote
 #
 # Created by Andrew Titmuss
 # https://github.com/iandrewt/
+# modified by Matthew Fry
+# https://github.com/gunslingerfry
 
 # Speed up script by not using Unicode
 export LC_ALL=C
@@ -41,6 +43,20 @@ time_total () {
     printf "%s\n" "$(awk -F ': |,' '/total/ {printf $2}' "$json_file")"
 }
 
+rating () {
+    LIKED=$(awk -F ': |,' '/\"liked\"/ { printf $2 }' "$json_file")
+    DISLIKED=$(awk -F ': |,' '/disliked/ { printf $2 }' "$json_file")
+    RATING="0"
+    # it's really not important which one wins if somehow both are true
+    if [ "${LIKED}" = "true" ]; then
+        RATING="1"
+    fi
+    if [ "${DISLIKED}" = "true" ]; then
+        RATING="-1"
+    fi
+    echo "${RATING}"
+}
+
 time_remain_sec () {
     TIME_TOTAL="$(time_total)"
     #echo "$TIME_TOTAL"
@@ -72,7 +88,7 @@ gpmdp_status () {
 
 gpmdp_info () {
     if [ "$(gpmdp_status)" == "Playing" ]; then
-        printf "%s\n" "Now Playing: $(title) by $(artist)"
+        printf "%s\n" "Playing: $(title) by $(artist)"
     elif [ "$(gpmdp_status)" == "Paused" ]; then
         printf "%s\n" "Paused: $(title) by $(artist)"
     fi
@@ -97,6 +113,7 @@ usage () { cat << EOF
     current         Print now playing song in "artist - song" format
     time_remain_sec Print remaining time in seconds
     time_current_sec Print current time in seconds
+    rating          Print 1 if liked, -1 if disliked, 0 if neither
     help            Print this help message
 
 EOF
@@ -116,6 +133,7 @@ case $1 in
     current) current ;;
     time_remain_sec) time_remain_sec ;;
     time_current_sec) time_current_sec ;;
+    rating) rating ;;
     *) usage ;;
 esac
 
