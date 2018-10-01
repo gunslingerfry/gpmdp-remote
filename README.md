@@ -15,6 +15,7 @@ You can consider this a different and possibly more functional flavor of [the or
     time_remain_sec       Print remaining time in seconds
     time_current_sec      Print current time in seconds
     current               Print now playing song in "artist - song" format
+    rating                Print 1 if liked, -1 if disliked, 0 if neither
 
 ## Andrew's Original README
 
