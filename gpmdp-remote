@@ -18,31 +18,50 @@ case "$(uname)" in
 esac
 
 title () {
-    printf "%s\n" "$(awk -F '"|:' '/"title"/ {printf $5}' "$json_file")"
+    printf "%s\n" "$(awk -F '"|:' '/title/ {printf $5}' "$json_file")"
 }
 
 artist () {
-    printf "%s\n" "$(awk -F '"|:' '/"artist"/ {printf $5}' "$json_file")"
+    printf "%s\n" "$(awk -F '"|:' '/artist/ {printf $5}' "$json_file")"
 }
 
 album () {
-    printf "%s\n" "$(awk -F '"|:' '!/"albumArt"/ && /"album"/ {printf $5}' "$json_file")"
+    printf "%s\n" "$(awk -F '"|:' '!/albumArt/ && /album/ {printf $5}' "$json_file")"
 }
 
 album_art () {
-    printf "%s\n" "$(awk -F '"|:' '/"albumArt"/ {printf $5":"$6}' "$json_file")"
+    printf "%s\n" "$(awk -F '"|:' '/albumArt/ {printf $5":"$6}' "$json_file")"
 }
 
 time_current () {
-    printf "%s\n" "$(awk -F ': |,' '/"current"/ {printf $2}' "$json_file")"
+    printf "%s\n" "$(awk -F ': |,' '/current/ {printf $2}' "$json_file")"
 }
 
 time_total () {
-    printf "%s\n" "$(awk -F ': |,' '/"total"/ {printf $2}' "$json_file")"
+    printf "%s\n" "$(awk -F ': |,' '/total/ {printf $2}' "$json_file")"
+}
+
+time_remain_sec () {
+    TIME_TOTAL="$(time_total)"
+    #echo "$TIME_TOTAL"
+    TIME_CURRENT="$(time_current)"
+    let TIME_REMAIN=(TIME_TOTAL - TIME_CURRENT)/1000
+    let TIME_REMAIN_MIN=TIME_REMAIN/60
+    let TIME_REMAIN_SEC=TIME_REMAIN%60
+    printf "%02d:%02d" $TIME_REMAIN_MIN $TIME_REMAIN_SEC
+#    echo "$TIME_REMAIN_MIN:$TIME_REMAIN_SEC"
+}
+
+time_current_sec () {
+    TIME_CURRENT_MS="$(time_current)"
+    let TIME_CURRENT=TIME_CURRENT_MS/1000
+    let TIME_CURRENT_MIN=TIME_CURRENT/60
+    let TIME_CURRENT_SEC=TIME_CURRENT%60
+    printf "%02d:%02d" $TIME_CURRENT_MIN $TIME_CURRENT_SEC
 }
 
 gpmdp_status () {
-    gpmdp_status=$(awk -F ': |,' '/"playing"/ {printf $2}' "$json_file")
+    gpmdp_status=$(awk -F ': |,' '/playing/ {printf $2}' "$json_file")
 
     if [[ "$gpmdp_status" == *"true"* ]]; then
         printf "%s\n" "Playing"
@@ -60,7 +79,7 @@ gpmdp_info () {
 }
 
 current () {
-    printf "%s\n" "$(artist) - $(album) - $(title)"
+    printf "%s\n" "$(artist) - $(title)"
 }
 
 usage () { cat << EOF
@@ -75,7 +94,9 @@ usage () { cat << EOF
     time_current    Print current song time in milliseconds
     time_total      Print total song time in milliseconds
     status          Print whether GPMDP is paused or playing
-    current         Print now playing song in "artist - album - song" format
+    current         Print now playing song in "artist - song" format
+    time_remain_sec Print remaining time in seconds
+    time_current_sec Print current time in seconds
     help            Print this help message
 
 EOF
@@ -93,6 +114,8 @@ case $1 in
     time_total) time_total ;;
     status) gpmdp_status ;;
     current) current ;;
+    time_remain_sec) time_remain_sec ;;
+    time_current_sec) time_current_sec ;;
     *) usage ;;
 esac
 
