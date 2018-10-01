@@ -10,11 +10,11 @@ You can consider this a different and possibly more functional flavor of [the or
 
 ### Usage
 
-usage: gpmdp-remote <option>
+    usage: gpmdp-remote <option>
 
-time\_remain\_sec       Print remaining time in seconds
-time\_current\_sec      Print current time in seconds
-current                 Print now playing song in "artist - song" format
+    time_remain_sec       Print remaining time in seconds
+    time_current_sec      Print current time in seconds
+    current               Print now playing song in "artist - song" format
 
 ## Andrew's Original README
 
